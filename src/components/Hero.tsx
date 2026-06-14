@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 import { profile } from '../data/portfolio'
 
@@ -27,17 +26,6 @@ function Tagline() {
 }
 
 export default function Hero() {
-  const [email, setEmail] = useState('')
-
-  // The email bar is repurposed as a quick "get in touch" — submitting opens
-  // the visitor's mail client pre-addressed to Shrabana.
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const subject = encodeURIComponent('Let’s work together')
-    const body = encodeURIComponent(`Hi Shrabana,\n\n(Reply-to: ${email})\n`)
-    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`
-  }
-
   return (
     <section
       id="top"
@@ -68,36 +56,27 @@ export default function Hero() {
           Frontend engineer crafting fast, accessible interfaces in React, Next.js &amp; TypeScript.
         </p>
 
-        {/* Primary CTA: email bar */}
-        <form
-          onSubmit={handleSubmit}
-          className="liquid-glass flex w-full max-w-md items-center gap-3 rounded-full py-2 pl-6 pr-2"
-        >
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            aria-label="Your email address"
-            className="w-full bg-transparent text-base text-white placeholder:text-white/40 focus:outline-none"
-          />
-          <button
-            type="submit"
-            aria-label="Get in touch"
-            className="flex shrink-0 items-center justify-center rounded-full bg-white p-3 text-black transition-transform hover:scale-105"
+        {/* Portfolio CTAs: primary = see the work, secondary = reach out.
+            These are the visitor's next steps to give (a recruiter's job), not
+            an email-capture form. */}
+        <div className="flex flex-col items-center gap-3 sm:flex-row">
+          <a
+            href="#work"
+            className="group flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition-transform hover:scale-[1.03]"
           >
-            <ArrowRight size={20} />
-          </button>
-        </form>
-
-        {/* Secondary CTA */}
-        <a
-          href="#work"
-          className="mt-5 text-sm font-medium text-white/70 underline-offset-4 transition-colors hover:text-white hover:underline"
-        >
-          or view my work ↓
-        </a>
+            View my work
+            <ArrowRight
+              size={18}
+              className="transition-transform group-hover:translate-x-0.5"
+            />
+          </a>
+          <a
+            href="#contact"
+            className="liquid-glass rounded-full px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5"
+          >
+            Get in touch
+          </a>
+        </div>
       </div>
 
       {/* Social footer pinned to the bottom of the hero */}

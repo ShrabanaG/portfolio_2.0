@@ -54,7 +54,7 @@ export default function Contact() {
         </a>
       </div>
 
-      <p className="mt-16 text-xs text-white/40">
+      <p className="mt-16 text-xs text-white/60">
         © {new Date().getFullYear()} {profile.name} · {profile.location}
       </p>
     </section>
