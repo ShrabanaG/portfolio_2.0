@@ -1,0 +1,172 @@
+/* The font @import MUST be the very first rule in the file — CSS requires
+   @import statements before any other style. We pull in Instrument Serif in
+   both upright (ital@0) and italic (ital@1) so we can italicise accent words. */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                              */
+/* ------------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+  /* Hide the scrollbar visually while keeping scroll functional. */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge / IE */
+}
+
+/* Chrome, Safari, new Edge */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  /* Inter-ish system stack for body copy; the serif is applied per-element. */
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Anchor targets sit below the fixed navbar, so nudge them down on scroll. */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
+}
+
+/* Remove the browser autofill background (Chrome's yellow/blue fill) so the
+   email input stays transparent over the glass bar. You can't paint the
+   autofill background transparent directly, so we keep the text/caret white and
+   push the background paint far into the future, leaving it visually clear. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #ffffff;
+  caret-color: #ffffff;
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Liquid glass — frosted panel with a masked gradient "rim" light    */
+/* ------------------------------------------------------------------ */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.01);
+  background-blend-mode: luminosity;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ::before paints a 1.4px gradient frame. The two-layer mask + xor/exclude
+   composite keeps ONLY the padding ring visible (the centre is masked out),
+   which is the trick that turns a filled gradient into a border-only glow. */
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.15) 80%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Custom cursor — a crisp dot + a soft trailing glass ring           */
+/*  Only shown on devices with a real (fine) pointer.                  */
+/* ------------------------------------------------------------------ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  display: none; /* hidden by default; enabled below for fine pointers */
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px; /* centre the 6px dot on the pointer */
+  border-radius: 9999px;
+  background: #fff;
+}
+
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px; /* centre the 34px ring on the pointer */
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.02);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  box-shadow:
+    0 0 14px rgba(255, 255, 255, 0.12),
+    inset 0 0 8px rgba(255, 255, 255, 0.06);
+  /* Only the size/look transitions; position is driven by JS transform. */
+  transition:
+    width 0.22s ease,
+    height 0.22s ease,
+    margin 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease;
+}
+
+/* Grow + brighten the ring when hovering an interactive element. */
+.cursor-ring--active {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+@media (pointer: fine) {
+  .cursor-dot,
+  .cursor-ring {
+    display: block;
+  }
+  /* Hide the native cursor only once our JS confirms it's running. */
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor input,
+  body.has-custom-cursor [role='button'] {
+    cursor: none;
+  }
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
