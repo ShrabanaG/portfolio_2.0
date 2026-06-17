@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { MessageCircle, X, Send } from "lucide-react";
+import { useState , useEffect} from "react";
+import { Bot, X, Send, Headset } from "lucide-react";
+
 
 type Message = { role: "user" | "bot"; text: string };
 
@@ -38,6 +39,14 @@ const ChatBot = () =>  {
     }
   }
 
+  useEffect(() => {
+  
+    const timer = setTimeout(() => setIsOpen(true), 1500); 
+    
+    return () => clearTimeout(timer);
+  
+}, []); 
+
   return (
     <>
       
@@ -45,9 +54,10 @@ const ChatBot = () =>  {
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open chat"
-          className="fixed bottom-6 right-6 z-50 rounded-full p-4 bg-white text-black shadow-lg"
+          className="fixed bottom-6 right-6 z-50 rounded-full p-4 bg-white text-black shadow-lg animate-pulse"
         >
-          <MessageCircle size={24} />
+          <Headset size={30} />
+
         </button>
       )}
 
