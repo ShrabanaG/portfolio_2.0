@@ -86,14 +86,14 @@ export const experience: Experience[] = [
     ],
   },
   {
-    company: 'Gaming Prism Pvt. Ltd.',
+    company: 'Freelance Contract — Consumer Social Engagement Platform',
     role: 'Frontend Engineer · sole frontend engineer',
     period: 'Feb 2025 — Nov 2025',
     points: [
-      'Defined the front-end architecture with Next.js SSR and code splitting in a TypeScript-first codebase, cutting initial load time by 25–30%.',
+      'Introduced Next.js SSR and code splitting to an existing portal in a TypeScript-first codebase, cutting initial load time by 25–30%.',
       'Built high-performance, cross-browser UIs across 5+ breakpoints with React, CSS3 and Tailwind.',
-      'Lifted Lighthouse performance above 90 via image optimisation and lazy loading, and raised accessibility scores by 85% through WCAG-focused reviews.',
-      'Shipped a real-time notification system with WebSockets (Socket.io), lifting engagement by 20%.',
+      'Lifted Lighthouse performance above 90 via image optimisation and lazy loading, with WCAG-focused accessibility reviews.',
+      'Enhanced and extended a real-time notification system with WebSockets (Socket.io), contributing to a team-wide 20% engagement lift.',
     ],
   },
   {
