@@ -86,7 +86,7 @@ export const experience: Experience[] = [
     ],
   },
   {
-    company: 'Freelance Contract — Consumer Social Engagement Platform',
+    company: 'Gaming Prism Pvt Ltd — Consumer Social Engagement Platform',
     role: 'Frontend Engineer · sole frontend engineer',
     period: 'Feb 2025 — Nov 2025',
     points: [
